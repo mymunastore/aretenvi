@@ -1,0 +1,32 @@
+/*
+Theme Name: React WP Theme
+Theme URI: https://aretenvironmental.com
+Author: ARET Environmental Services
+Author URI: https://aretenvironmental.com
+Description: WordPress theme wrapping a React build for ARET Environmental Services - Professional Waste Management Solutions
+Version: 1.0
+Requires at least: 5.0
+Tested up to: 6.4
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: react-wp-theme
+Tags: react, spa, single-page-application, modern, custom
+
+This theme wraps a React single-page application built with Vite.
+All styling is handled by the React app's bundled CSS files.
+*/
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
