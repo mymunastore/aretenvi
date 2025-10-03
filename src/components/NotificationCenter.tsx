@@ -38,8 +38,8 @@ const NotificationCenter = () => {
           filter: `customer_id=eq.${customer.id}`,
         },
         (payload) => {
-          const eventType = payload.eventType;
-          const record = payload.new as any;
+          const { eventType, new: record } = payload;
+          const typedRecord = record as { status?: string };
 
           if (eventType === 'INSERT') {
             addNotification({
@@ -47,7 +47,7 @@ const NotificationCenter = () => {
               message: 'Your waste collection has been scheduled',
               type: 'info',
             });
-          } else if (eventType === 'UPDATE' && record?.status === 'completed') {
+          } else if (eventType === 'UPDATE' && typedRecord?.status === 'completed') {
             addNotification({
               title: 'Collection Completed',
               message: 'Your waste collection has been completed successfully!',

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Settings, RefreshCw, Save, Download, History, CircleAlert as AlertCircle, CircleCheck as CheckCircle, Circle as XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -26,7 +26,7 @@ export const ConfigurationManager = () => {
 
   const configService = createConfigService();
 
-  const loadConfigurations = async () => {
+  const loadConfigurations = useCallback(async () => {
     try {
       setLoading(true);
       const grouped = await configService.getAllByCategories();
@@ -40,11 +40,11 @@ export const ConfigurationManager = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [configService, toast]);
 
   useEffect(() => {
     loadConfigurations();
-  }, []);
+  }, [loadConfigurations]);
 
   const handleSync = async () => {
     try {

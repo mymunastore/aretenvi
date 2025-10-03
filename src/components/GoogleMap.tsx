@@ -7,58 +7,67 @@ interface GoogleMapProps {
   className?: string;
 }
 
+type GoogleMap = object;
+type GoogleMarker = object;
+
+interface GoogleInfoWindow {
+  setContent(content: string): void;
+  open(map: GoogleMap, marker: GoogleMarker): void;
+}
+
+interface GoogleMapOptions {
+  center: { lat: number; lng: number };
+  zoom: number;
+  mapTypeId: string;
+  styles?: GoogleMapTypeStyle[];
+  disableDefaultUI?: boolean;
+  zoomControl?: boolean;
+  mapTypeControl?: boolean;
+  streetViewControl?: boolean;
+  fullscreenControl?: boolean;
+}
+
+interface GoogleMapTypeStyle {
+  featureType?: string;
+  elementType?: string;
+  stylers?: Array<{ [key: string]: string | number }>;
+}
+
+interface GoogleMarkerOptions {
+  position: { lat: number; lng: number };
+  map: GoogleMap;
+  title: string;
+  icon?: GoogleMarkerIcon;
+  animation?: number;
+}
+
+interface GoogleMarkerIcon {
+  url: string;
+  scaledSize: { width: number; height: number };
+  origin: { x: number; y: number };
+  anchor: { x: number; y: number };
+}
+
+interface GoogleInfoWindowOptions {
+  content: string;
+  maxWidth?: number;
+}
+
 declare global {
   interface Window {
     google: {
       maps: {
-        Map: new (element: HTMLElement, options: google.maps.MapOptions) => google.maps.Map;
-        Marker: new (options: google.maps.MarkerOptions) => google.maps.Marker;
-        InfoWindow: new (options?: google.maps.InfoWindowOptions) => google.maps.InfoWindow;
+        Map: new (element: HTMLElement, options: GoogleMapOptions) => GoogleMap;
+        Marker: new (options: GoogleMarkerOptions) => GoogleMarker;
+        InfoWindow: new (options?: GoogleInfoWindowOptions) => GoogleInfoWindow;
+        Animation: {
+          DROP: number;
+        };
+        Size: new (width: number, height: number) => { width: number; height: number };
+        Point: new (x: number, y: number) => { x: number; y: number };
       };
     };
     initMap: () => void;
-  }
-}
-
-declare namespace google.maps {
-  interface Map {}
-  interface Marker {}
-  interface InfoWindow {
-    setContent(content: string): void;
-    open(map: Map, marker: Marker): void;
-  }
-  interface MapOptions {
-    center: { lat: number; lng: number };
-    zoom: number;
-    mapTypeId: string;
-    styles?: MapTypeStyle[];
-    disableDefaultUI?: boolean;
-    zoomControl?: boolean;
-    mapTypeControl?: boolean;
-    streetViewControl?: boolean;
-    fullscreenControl?: boolean;
-  }
-  interface MapTypeStyle {
-    featureType?: string;
-    elementType?: string;
-    stylers?: Array<{ [key: string]: string | number }>;
-  }
-  interface MarkerOptions {
-    position: { lat: number; lng: number };
-    map: Map;
-    title: string;
-    icon?: MarkerIcon;
-    animation?: number;
-  }
-  interface MarkerIcon {
-    url: string;
-    scaledSize: { width: number; height: number };
-    origin: { x: number; y: number };
-    anchor: { x: number; y: number };
-  }
-  interface InfoWindowOptions {
-    content: string;
-    maxWidth?: number;
   }
 }
 
