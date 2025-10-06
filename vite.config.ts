@@ -76,7 +76,6 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    // Performance optimizations
     target: "es2020",
     minify: "esbuild",
     cssMinify: true,
@@ -85,41 +84,12 @@ export default defineConfig(({ mode }) => ({
     reportCompressedSize: false,
     rollupOptions: {
       output: {
-        // Optimize chunk naming
         chunkFileNames: "assets/[name]-[hash].js",
         entryFileNames: "assets/[name]-[hash].js",
         assetFileNames: "assets/[name]-[hash].[ext]",
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'react-vendor';
-            }
-            if (id.includes('react-router-dom') || id.includes('@tanstack/react-query')) {
-              return 'router';
-            }
-            if (id.includes('@radix-ui')) {
-              return 'ui-core';
-            }
-            if (id.includes('react-hook-form') || id.includes('@hookform/resolvers')) {
-              return 'ui-form';
-            }
-            if (id.includes('lucide-react') || id.includes('clsx') || id.includes('tailwind-merge') || id.includes('class-variance-authority')) {
-              return 'utils';
-            }
-            if (id.includes('@supabase/supabase-js')) {
-              return 'backend';
-            }
-          }
-        },
-      },
-      // Tree shaking optimizations
-      treeshake: {
-        moduleSideEffects: false,
-        propertyReadSideEffects: false,
-        unknownGlobalSideEffects: false,
       },
     },
-    chunkSizeWarningLimit: 500,
+    chunkSizeWarningLimit: 1000,
   },
   // CSS optimization
   css: {
